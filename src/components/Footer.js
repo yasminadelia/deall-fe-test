@@ -4,9 +4,10 @@ const Footer = () => {
   return (
     
     <footer 
-        className="static bg-blue-900 py-5 w-screen z-50"
+        className="flex items-center justify-center h-12 
+                  w-screen bg-blue-900 fixed bottom-0"
     >
-        <p className="font-bold text-center text-lg text-white">Create with 🧡 by Yasmin</p>
+        <p className="font-bold text-lg text-white my-auto">Created with 🧡 by Yasmin</p>
     
     </footer>
     
