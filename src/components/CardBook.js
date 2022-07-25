@@ -12,8 +12,8 @@ const CardBook = ({props, category}) => {
                     src={props.cover_url} alt={props.title} 
                     className="max-h-80 mb-2 rounded-lg"
                 />
-                {props.authors.map(author => 
-                    <p className='font-bold'>{author}</p>
+                {props.authors.map((author,idx) => 
+                    <p key={idx} className='font-bold'>{author}</p>
                 )}
                 <p className='text-sm'>{category}</p>
             </div>
