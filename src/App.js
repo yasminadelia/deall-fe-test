@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import BookmarkPage from './pages/bookmarkPage';
 import BookPage from './pages/bookPage';
+import ReadPage from './pages/readPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path='/' element={<Home />} />
       <Route path='/bookmark' element={<BookmarkPage />} />
       <Route path='/book' element={<BookPage />} />
+      <Route path='/read' element={<ReadPage />} />
     </Routes> 
   );
 }
