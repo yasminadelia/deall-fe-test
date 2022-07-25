@@ -9,12 +9,14 @@ const Home = () => {
 
   const categoryAPI = 'https://asia-southeast2-sejutacita-app.cloudfunctions.net/fee-assessment-categories';
   const bookAPI = 'https://asia-southeast2-sejutacita-app.cloudfunctions.net/fee-assessment-books';
-
   const [catList, setCatList] = useState([]);
   const [bookList, setBookList] = useState([]);
   const [categoryName, setCategoryName] = useState("Happiness & Mindfulness");
   const [searchField, setSearchField] = useState();
   const [filteredBookList, setFilteredBookList] = useState();
+  const [currentCategory, setCurrentCategory] = useState();
+  const [currentPage, setCurrentPage] = useState();
+  
 
   useEffect(() => {
     getCategories();
@@ -47,6 +49,8 @@ const Home = () => {
       bookAPI + `?categoryId=${categoryId}&page=${page}&size=${size}`
     ).then(resp => {
         if(resp.status === 200) {
+          setCurrentCategory(categoryId);
+          setCurrentPage(page+1);
           setBookList(resp.data);
           setFilteredBookList(resp.data);
         }
@@ -58,8 +62,15 @@ const Home = () => {
   const handleCategory = (id, page, title) => {
     getBookList(id, page);
     setCategoryName(title);
+    setCurrentCategory(id);
   }
 
+  const handlePageClick = (event) => {
+    const newPage = event.target.innerText - 1;
+    getBookList(currentCategory, newPage);
+  };
+
+  
   return (
     <div>
     <Navbar />
@@ -69,19 +80,30 @@ const Home = () => {
               <div className='flex flex-wrap'>
                   {/* loop from api */}
                   {
-                    catList && catList.map((category) => (
-                       <ButtonCat 
-                        key={category.id} 
-                        text={category.name} 
-                        onClick={() => handleCategory(category.id,0,category.name)}
-                      />
-                    ))
+                    catList && catList.map((category) => {
+                      if(category.id === currentCategory) {
+                       return <ButtonCat 
+                                key={category.id} 
+                                text={category.name} 
+                                onClick={() => handleCategory(category.id,0,category.name)}
+                                style={'bg-gray-200'}
+                              />
+                      } else {
+                        return <ButtonCat 
+                                key={category.id} 
+                                text={category.name} 
+                                onClick={() => handleCategory(category.id,0,category.name)}
+                                />
+                      }
+                    })
                   }
               </div>
               <SectionCat 
                 name={categoryName} 
                 bookList={filteredBookList}
                 setSearchField={setSearchField}
+                handlePageClick={handlePageClick}
+                currentPage={currentPage}
               />
 
           </div>
