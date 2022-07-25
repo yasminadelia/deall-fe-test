@@ -1,16 +1,23 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-const CardBook = ({props}) => {
-    console.log(props);
+const CardBook = ({props, category}) => {
     return (
-        <div className='mr-5 mb-5'>
-            <img 
-                src={props.image} alt={props.title} 
-                className="h-60 mb-2"
-            />
-            <p className='font-bold'>{props.author}</p>
-            <p className='text-sm'>{props.category}</p>
-        </div>
+        <Link 
+            to='/book'
+            state={{ props: props }}
+        >
+            <div className='mb-5'>
+                <img 
+                    src={props.cover_url} alt={props.title} 
+                    className="max-h-80 mb-2 rounded-lg"
+                />
+                {props.authors.map(author => 
+                    <p className='font-bold'>{author}</p>
+                )}
+                <p className='text-sm'>{category}</p>
+            </div>
+        </Link>
     )
 }
 
